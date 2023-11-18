@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+</head>
+<body>
+  <!--
+    5. Tao
+        <h1 title="Hello" class="heading">Hello world</h1>
+
+    6. Tao
+        <ul>
+          <li>JS</li>
+          <li>ReactJS</li>
+        </ul>
+
+    7. Tao
+        <div class="post-item">
+          <h2 title="Hoc js">hoc reactjs</h2>
+          <p>Hoc reactjs vui</p>
+        </div>
+   -->
+  <script>
+    // DOM
+    const h1DOM = document.createElement('h1')
+    h1DOM.title = 'Hello'
+    h1DOM.className = "heading"
+    h1DOM.innerText = "Hello world"
+    document.body.appendChild(h1DOM)
+
+    // Reactjs
+    // React.createElement(title, props, children, n)
+    const h1React = React.createElement('h1', {
+      title: 'Hello',
+      className: 'heading'
+    }, 'Hello world')
+
+
+    // DOM
+    const ulDOM = document.createElement('ul')
+    const li1DOM = document.createElement('li')
+    const li2DOM = document.createElement('li')
+    li1DOM.innerText = 'JS'
+    li2DOM.innerText = 'ReactJS'
+    ulDOM.appendChild(li1DOM)
+    ulDOM.appendChild(li2DOM)
+    document.body.appendChild(ulDOM)
+
+    // React
+
+    const ulReact = React.createElement(
+      'ul',
+      {
+        id: 'ul-id',
+        style: 'color: red'
+      },
+      React.createElement('li', { id: 'li-1'}, 'JS'),
+      React.createElement('li', null, 'ReactJS'),
+    )
+
+  </script>
+</body>
+</html>
