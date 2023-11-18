@@ -12,50 +12,43 @@
 
 <body>
   <!--
-    JSX -> JavaScript XML
+    +Hooks
 
-    1. Luon dung React.createElement() ? Van de?
-    2. JSX?
-    3. JSX ko phai la HTML, can co JS, Babel de dung JSX
-    4. JSX va React-DOM
+    1.React element types: string, function/class
+      - Wrapper
+        - Header -> header component
+        - Content -> Content component
+        - Footer -> Footer component
 
-
-    Cau hoi thuong gap:
-     Tại sao khi code thuần dùng map phải join()...
-     Gặp lỗi khi render từ mảng (prop "key")
-      -> Cac the con can key de toi uu hieu suat
-     Không render được 2 elements cùng lúc
-      -> Can co wrap de goi 2 thang lai
+    2. Bieu dien don gian voi JSX
    -->
-  <div id="root"></div>
-
+  <div id="app"></div>
   <script type="text/babel">
-    // const ul = React.createElement(
-    //   'ul',
-    //   null,
-    //   React.createElement('li',null,'JS'),
-    //   React.createElement('li',null,'ReactJS')
-    // )
+    function Header() {
+      return (
+        <div className="header">Header</div>
+      )
+    }
 
-    const courses = [
-      {name: 'HTML'},
-      {name: 'CSS'},
-      {name: 'JS'}
-    ]
-    const ul = <ul>
-      {courses.map((course, index) => (
-      <li key={index}>{course.name}</li>
-      ))}
-    </ul>
-
-    const jsx = (
-      <>
-        <h1>Heading 1</h1>
-        <h2>Heading 2</h2>
-      </>
-    );
-
-    ReactDOM.render(ul,document.getElementById('root'))
+    function PostItem() {
+      return (
+        <div className="post-item">
+          <img src="mytest-src" alt="my src test"></img>
+          <h2 className="post-title">Javascript</h2>
+          <p className="post-desc">Ban can hoc JS</p>
+          <p className="post-published">Hay den voi chung toi</p>
+        </div>
+      )
+    }
+    const app = (
+      <div className="wrapper">
+        <Header />
+        {[...Array(5)].map((_, index) => (
+          <PostItem key={index} />
+        ))}
+      </div>
+    )
+    ReactDOM.render(app,document.getElementById('app'))
   </script>
 </body>
 
