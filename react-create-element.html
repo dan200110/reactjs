@@ -7,52 +7,55 @@
   <title>Document</title>
   <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 
 <body>
   <!--
-    1. Tai sao phai su dung React-DOM
-      để có thể render React element, là cầu nối giữa react và dom, giúp react tạo ra đc react element và render vào dom
+    JSX -> JavaScript XML
 
-    2. Tai sao phai tach React-DOM ra?
+    1. Luon dung React.createElement() ? Van de?
+    2. JSX?
+    3. JSX ko phai la HTML, can co JS, Babel de dung JSX
+    4. JSX va React-DOM
 
-    3. Render UI
 
-    7. Tao
-        <div class="post-item">
-          <h2 title="Hoc js">hoc reactjs</h2>
-          <p>Hoc reactjs vui</p>
-        </div>
+    Cau hoi thuong gap:
+     Tại sao khi code thuần dùng map phải join()...
+     Gặp lỗi khi render từ mảng (prop "key")
+      -> Cac the con can key de toi uu hieu suat
+     Không render được 2 elements cùng lúc
+      -> Can co wrap de goi 2 thang lai
    -->
-   <div id="root"></div>
-  <script>
-    //React
-    const postItem = React.createElement(
-      'div',
-      {
-        className: 'post-item'
-      },
-      React.createElement(
-        'h2',
-        {
-          title: 'HOC js'
-        },
-        'Hoc reactJS'
-      ),
-      React.createElement(
-        'p',{},'Hoc reactjs co ban'
-      )
-    )
+  <div id="root"></div>
 
-    // Get root element
-    const root = document.getElementById('root')
+  <script type="text/babel">
+    // const ul = React.createElement(
+    //   'ul',
+    //   null,
+    //   React.createElement('li',null,'JS'),
+    //   React.createElement('li',null,'ReactJS')
+    // )
 
-    // React-DOME -> render UI
-    ReactDOM.render(postItem, root)
+    const courses = [
+      {name: 'HTML'},
+      {name: 'CSS'},
+      {name: 'JS'}
+    ]
+    const ul = <ul>
+      {courses.map((course, index) => (
+      <li key={index}>{course.name}</li>
+      ))}
+    </ul>
 
-    // React@18
-    // const root18 = ReactDOM.createRoot(container)
-    // root18.render(postItem)
+    const jsx = (
+      <>
+        <h1>Heading 1</h1>
+        <h2>Heading 2</h2>
+      </>
+    );
+
+    ReactDOM.render(ul,document.getElementById('root'))
   </script>
 </body>
 
