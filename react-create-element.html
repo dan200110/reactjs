@@ -12,44 +12,84 @@
 
 <body>
   <!--
-    +Hooks
+    Props
 
-    1.React element types: string, function/class
-      - Wrapper
-        - Header -> header component
-        - Content -> Content component
-        - Footer -> Footer component
+    - React elements
+      Sử dụng props giống như với attribute của thẻ HTML
+      2 props class, for => className, htmlFor
+      Phải tuân theo quy ước có sẵn
 
-    2. Bieu dien don gian voi JSX
+    - React components
+      - Sử dụng props giống như đối số cho Component
+      - Tự do đặt tên props
+        - Đặt theo camelCase
+    - Chú ý:
+      - Prop "key" là prop đặc biệt
+      - Props cơ bản là đối số của Component
+       => Props có thể là bất cứ kiểu dữ lieuj gì
+       - SỬ dụng destructuring
+
    -->
   <div id="app"></div>
   <script type="text/babel">
-    function Header() {
-      return (
-        <div className="header">Header</div>
-      )
-    }
+    
+    // API
+    const courses = [
+      {
+        id: 1,
+        image: 'src1',
+        title: 'title 1',
+        description: 'description 1',
+        published: 'published 1'
+      },
+      {
+        id: 2,
+        image: 'src2',
+        title: 'title 2',
+        description: 'description 2',
+        published: 'published 2'
+      }
+    ]
 
-    function PostItem() {
+    // Tranformer
+    function PostItem(props) {
       return (
-        <div className="post-item">
-          <img src="mytest-src" alt="my src test"></img>
-          <h2 className="post-title">Javascript</h2>
-          <p className="post-desc">Ban can hoc JS</p>
-          <p className="post-published">Hay den voi chung toi</p>
+        <div className="post-item" onClick={() => alert(props.title)}>
+          <img src={props.image} alt={props.title} />
+          <h2 className="post-title">{props.title}</h2>
+          <p className="post-desc">{props.description}</p>
+          <p className="post-published">{props.published}</p>
         </div>
       )
     }
-    const app = (
-      <div className="wrapper">
-        <Header />
-        {[...Array(5)].map((_, index) => (
-          <PostItem key={index} />
-        ))}
-      </div>
-    )
-    ReactDOM.render(app,document.getElementById('app'))
+
+    function App() {
+      return (
+        <div className="wrapper">
+          {courses.map(course => (
+            <PostItem
+              key={course.id}
+              title={course.title}
+              image={course.image}
+              description={course.description}
+              published={course.published}
+            />
+          ))}
+        </div>
+      );
+    }
+
+    function DomEvent() {
+      return (
+        <button
+          onClick={(event) => console.log(event.target)}>
+          Click me
+        </button>
+      )
+    }
+    ReactDOM.render(<App />,document.getElementById('app'))
   </script>
+
 </body>
 
 </html>
