@@ -1,39 +1,23 @@
-import { useState } from 'react'
-
+import { memo, useCallback, useState } from 'react'
+import Content from './Content'
+// 1. memo() -> Higher Order Component (HOC)
+// 2. useCallback()
+    // Reference Type
+    // React memo()
 
 function App() {
-  const [job, setJob] = useState('')
-  const [jobs, setJobs] = useState(() => {
-    const storageJobs = JSON.parse(localStorage.getItem('jobs'))
-    console.log(storageJobs);
-    return storageJobs
-  })
-  const handleSubmit = () => {
-    setJobs(prev => {
-      const jsonJobs = JSON.stringify([...prev, job])
+  const [count, setCount] = useState(0)
 
-      // Save to local storage
-      localStorage.setItem('jobs', jsonJobs)
-      return [...prev, job]
-    })
-    setJob('')
-  }
+  const handleIncrease = useCallback(() => {
+    setCount(prevCount => prevCount + 1)
+  }, [])
+
   return (
-    <div className="App" style={{padding: 20}}>
-      <input
-        value={job}
-        onChange={e => setJob(e.target.value)}
-      />
-      <button onClick={handleSubmit}>Add</button>
-      <ul>
-        {jobs.map((job, index) => (
-        <li key={index}>
-          {job}
-        </li>
-        ))}
-      </ul>
+    <div>
+      <Content onIncrease={handleIncrease} />
+      <h1>{count}</h1>
     </div>
-  );
+  )
 }
 
 export default App;
