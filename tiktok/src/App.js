@@ -1,25 +1,27 @@
-import Content from './Content'
-import { ThemeContext, ThemeProvider } from './ThemeContext'
-import './App.css'
-import { useContext } from 'react'
-// Context
-// CompA => CompB => CompC
-// Bo di B thi van co the chay CompA => CompC
-// Theme: Dark / Light
-
-// 1. Create context
-// 2. Provider
-// 3. Consumer
+import { useStore, actions } from './store'
 
 function App () {
-  const context = useContext(ThemeContext)
+  const [state, dispatch] = useStore()
+  const { todos, todoInput } = state
+
+  const handleAdd = () => {
+    dispatch(actions.addTodo(todoInput))
+  }
+
   return (
-    <ThemeProvider>
-      <div>
-        <button onClick={context.toggleTheme}>Toggle theme</button>
-        <Content />
-      </div>
-    </ThemeProvider>
+    <div>
+      <input
+        value={todoInput}
+        placeholder='Enter todo..'
+        onChange={e => {
+          dispatch(actions.setTodoInput(e.target.value))
+        }}
+      />
+      <button onClick={handleAdd}>Add</button>
+      {todos.map((todo, index) => (
+        <li key={index}>{todo}</li>
+      ))}
+    </div>
   )
 }
 
