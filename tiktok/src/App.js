@@ -11,40 +11,76 @@ import { useState, useReducer } from 'react'
 // 4. Dispatch
 
 //Init state
-const initState = 0
+const initState = {
+  job: '',
+  jobs: []
+}
 
 // Actions
-const UP_ACTION = 'up'
-const DOWN_ACTION = 'down'
+const SET_JOB = 'set_job'
+const ADD_JOB = 'add_job'
+const DELETE_JOB = 'delete_job'
 
+const setJob = payload => {
+  return {
+    type: SET_JOB,
+    payload
+  }
+}
+
+const addJob = payload => {
+  return {
+    type: ADD_JOB,
+    payload
+  }
+}
+
+console.log(setJob);
 // Reducer
 const reducer = (state, action) => {
-  console.log('reducer running....');
-  switch(action) {
-    case UP_ACTION:
-      return state + 1
-    case DOWN_ACTION:
-      return state - 1
+  console.log('Actions', action);
+  console.log('Prev state', state);
+
+  switch(action.type) {
+    case SET_JOB:
+      return {
+        ...state,
+        job: action.payload
+      }
+      break
+    case ADD_JOB:
+      return {
+        ...state,
+        jobs: [...state.jobs, action.payload]
+      }
+      break
     default:
       throw new Error('Invalid action')
   }
 }
 function App() {
-  const [count, dispatch] = useReducer(reducer, initState)
+  const [state, dispatch] = useReducer(reducer, initState)
+  const {job, jobs} = state
 
+  const handleSubmit = () => {
+    dispatch(addJob(job))
+  }
   return (
     <div>
-      <h1>{count}</h1>
-      <button
-        onClick={() => dispatch(DOWN_ACTION)}
-      >
-        Down
-      </button>
-      <button
-        onClick={() => dispatch(UP_ACTION)}
-      >
-        Up
-      </button>
+      <h3>Todo</h3>
+      <input
+        value={job}
+        placeholder='Enter todo...'
+        onChange={e => {
+          dispatch(setJob(e.target.value))
+        }}
+      />
+      <button onClick={handleSubmit}>Add</button>
+      <ul>
+        {jobs.map((job, index) => {
+          <li key={index}>{job} &times;</li>
+        })}
+      </ul>
     </div>
   )
 }
