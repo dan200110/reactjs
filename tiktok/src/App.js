@@ -1,21 +1,46 @@
-import { memo, useCallback, useState } from 'react'
-import Content from './Content'
-// 1. memo() -> Higher Order Component (HOC)
-// 2. useCallback()
-    // Reference Type
-    // React memo()
+import { useState, useMemo } from 'react'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [name, setName] = useState('')
+  const [price, setPrice] = useState('')
+  const [products, setProducts] = useState([])
+  const handleSubmit = () => {
+    setProducts([...products, {name, price: +price}])
+    setName('')
+    setPrice('')
 
-  const handleIncrease = useCallback(() => {
-    setCount(prevCount => prevCount + 1)
-  }, [])
+  }
 
+  const total = useMemo(() => {
+    const result = products.reduce((result, prod) => {
+      console.log('Tinh toan lai');
+      return result + prod.price
+    }, 0)
+
+    return result
+  }, [products])
   return (
     <div>
-      <Content onIncrease={handleIncrease} />
-      <h1>{count}</h1>
+      <input
+        value={name}
+        placeholder='Enter name...'
+        onChange={e => setName(e.target.value)}
+      />
+      <br />
+      <input
+        value={price}
+        placeholder='Enter price...'
+        onChange={e => setPrice(e.target.value)}
+      />
+      <br />
+      <button onClick={handleSubmit}>Add</button>
+      <br />
+      Total: {total}
+      <ul>
+        {products.map((product, index) => (
+          <li key={index}>{product.name} - {product.price}</li>
+        ))}
+      </ul>
     </div>
   )
 }
